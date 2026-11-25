@@ -64,14 +64,26 @@
     .btn:hover { transform: translateY(-2px); }
     .btn-primary { background: var(--teal); color: #06151b; }
     .btn-secondary { border: 1px solid var(--line); background: rgba(255,255,255,.035); color: var(--text); }
-    .profile-wrap { justify-self: center; position: relative; width: min(300px, 100%); }
-    .profile-wrap::after { content: "DATA · OPERATIONS · QUALITY"; position: absolute; right: -38px; bottom: 74px; transform: rotate(-90deg) translateX(100%); transform-origin: right bottom; color: rgba(201,245,238,.8); font-size: .62rem; font-weight: 800; letter-spacing: .2em; white-space: nowrap; }
-    .profile-wrap::before { content: ""; position: absolute; inset: 15px -15px -15px 15px; border: 1px solid rgba(69,214,197,.55); border-radius: 30px; }
-    .profile-card { position: relative; padding: 12px; border: 1px solid var(--line); border-radius: 30px; background: linear-gradient(145deg, rgba(69,214,197,.14), rgba(117,169,255,.08)); box-shadow: var(--shadow); }
-    .profile-card img { display: block; width: 100%; aspect-ratio: 4 / 4.7; object-fit: cover; object-position: center top; border-radius: 21px; background: #17263a; }
-    .profile-caption { padding: 13px 5px 3px; text-align: center; }
-    .profile-caption strong { display: block; font-size: .98rem; }
-    .profile-caption span { color: var(--muted); font-size: .83rem; }
+    .hero-visual { position:relative; justify-self:center; width:min(430px,100%); aspect-ratio:1.35; display:grid; place-items:center; perspective:900px; }
+    .chart-glow { position:absolute; width:72%; height:65%; background:radial-gradient(ellipse,rgba(69,214,197,.22),transparent 70%); filter:blur(18px); }
+    .interactive-chart { position:relative; width:100%; padding:19px 18px 14px; border:1px solid rgba(69,214,197,.24); border-radius:24px; background:linear-gradient(145deg,rgba(18,37,57,.94),rgba(12,25,40,.88)); box-shadow:var(--shadow); transform-style:preserve-3d; transition:transform .24s ease, border-color .25s, box-shadow .25s; }
+    .interactive-chart:hover { border-color:rgba(69,214,197,.6); box-shadow:0 25px 70px rgba(0,0,0,.32),0 0 35px rgba(69,214,197,.09); }
+    .chart-label { color:#9cb1c9; font-size:.68rem; font-weight:800; letter-spacing:.2em; }
+    .interactive-chart svg { display:block; width:100%; margin:5px 0; }
+    .chart-grid path { stroke:#90a6be; stroke-opacity:.14; stroke-width:1; }
+    .chart-bars rect { fill:url(#barGradient); fill:#45d6c5; opacity:.4; transform-origin:bottom; animation:barPulse 3.8s ease-in-out infinite alternate; }
+    .chart-bars rect:nth-child(2){animation-delay:.25s;fill:#75a9ff}.chart-bars rect:nth-child(3){animation-delay:.5s}.chart-bars rect:nth-child(4){animation-delay:.75s;fill:#75a9ff}.chart-bars rect:nth-child(5){animation-delay:1s}
+    .chart-line { fill:none; stroke:#a78bfa; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:520; stroke-dashoffset:520; animation:drawLine 3s ease forwards, lineGlow 2.5s ease-in-out infinite alternate; }
+    .chart-points circle { fill:#e6fffb; stroke:#45d6c5; stroke-width:3; animation:pointPulse 2s ease-in-out infinite; }
+    .chart-footer { display:flex; justify-content:space-between; color:#8298b2; font-size:.58rem; letter-spacing:.12em; }
+    .floating-ring { position:absolute; border-radius:50%; border:1px solid rgba(117,169,255,.24); pointer-events:none; animation:float 6s ease-in-out infinite; }
+    .ring-one { width:90px;height:90px;right:-10px;top:-10px;box-shadow:0 0 0 14px rgba(117,169,255,.025); }
+    .ring-two { width:44px;height:44px;left:-12px;bottom:5px;border-color:rgba(69,214,197,.32);animation-delay:-2s; }
+    @keyframes barPulse { from { transform:scaleY(.88);opacity:.34 } to { transform:scaleY(1.04);opacity:.72 } }
+    @keyframes drawLine { to { stroke-dashoffset:0 } } @keyframes lineGlow { from {filter:drop-shadow(0 0 2px #a78bfa)} to {filter:drop-shadow(0 0 8px #a78bfa)} }
+    @keyframes pointPulse { 50% { transform:scale(1.35); transform-origin:center; } } @keyframes float { 50% { transform:translateY(-9px) rotate(8deg); } }
+    @media(max-width:850px){.hero-visual{width:min(380px,100%)}.ring-one{right:0}}
+    @media(max-width:640px){.hero-visual{width:min(340px,95%);margin:8px auto 0}.interactive-chart{padding:15px}.ring-one{width:65px;height:65px}}
     .quick-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 54px; }
     .fact { padding: 17px 18px; border: 1px solid var(--line); border-radius: 15px; background: linear-gradient(145deg, rgba(17,31,51,.82), rgba(17,31,51,.42)); transition: transform .25s, border-color .25s, box-shadow .25s; }
     .fact:hover { transform: translateY(-5px); border-color: rgba(69,214,197,.42); box-shadow: 0 15px 34px rgba(0,0,0,.2); }
@@ -133,6 +145,20 @@
     footer { padding: 27px 0 38px; border-top: 1px solid var(--line); color: #8192a8; font-size: .83rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
 
+    .cert-grid { display:grid; grid-template-columns:1fr; gap:16px; max-width:850px; margin:0 auto; }
+    .cert-card { padding:25px; display:flex; gap:22px; align-items:flex-start; }
+    .cert-card h3 { margin:10px 0 6px; } .cert-card p { color:var(--muted); margin:0 0 7px; }
+    .cert-small { font-size:.88rem; } .cert-mark { display:grid;place-items:center;flex:0 0 58px;height:58px;border-radius:16px;color:#101d2d;background:linear-gradient(135deg,#f1cf74,#d6a742);font-size:1.6rem; }
+    .cert-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:16px; }
+    .pdf-modal { position:fixed;inset:0;z-index:9999;background:#07111d;display:none;flex-direction:column; }
+    .pdf-modal.open { display:flex; } .pdf-modal-header { display:flex;align-items:center;gap:16px;padding:12px 16px;background:#102035;color:#eaf2fb; }
+    .pdf-modal-header strong { flex:1; } .pdf-modal-header a,.pdf-modal-header button { color:#dce9f8;background:transparent;border:1px solid rgba(255,255,255,.18);padding:9px 12px;border-radius:9px;text-decoration:none;cursor:pointer; }
+    .pdf-modal iframe { border:0;flex:1;width:100%;background:#fff; } body.modal-open { overflow:hidden; }
+    .call-details { position:relative; } .call-details summary { list-style:none;cursor:pointer;text-decoration:none;border:1px solid var(--line);border-radius:11px;padding:10px 13px;color:#dce9f8;font-size:.88rem;background:rgba(255,255,255,.035); }
+    .call-details summary::-webkit-details-marker {display:none;} .call-options { display:flex;flex-direction:column;gap:8px;margin-top:8px; }
+    .call-options a { color:#dce9f8;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.04); }
+    .call-options a:hover { border-color:var(--teal);color:var(--teal); }
+    @media(max-width:640px){.cert-card{flex-direction:column}.cert-actions{flex-direction:column}.cert-actions .btn{width:100%;text-align:center}.pdf-modal-header{flex-wrap:wrap}.pdf-modal-header strong{flex-basis:100%}}
     /* Decorative chart motifs — visual accents only, with no data or labels */
     .hero-chart-motif { position:absolute; z-index:-1; pointer-events:none; opacity:.72; filter:drop-shadow(0 12px 28px rgba(0,0,0,.22)); }
     .hero-chart-bars { width:148px; height:104px; right:5.5%; top:34px; transform:rotate(7deg); }
@@ -146,7 +172,7 @@
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
     @media (max-width: 850px) {
       .hero-grid { grid-template-columns: 1fr .65fr; gap: 30px; }
-      .profile-wrap::after { right: -24px; }
+
       .skills-grid, .project-grid { grid-template-columns: repeat(2, 1fr); }
       .about-grid { grid-template-columns: 1fr; }
       .contact-panel { align-items: flex-start; flex-direction: column; }
@@ -159,8 +185,7 @@
       .nav-links.open { display: flex; }
       .hero { padding: 62px 0 50px; }
       .hero-grid { grid-template-columns: 1fr; }
-      .profile-wrap { width: min(235px, 75%); margin: 14px auto 0; }
-      .profile-wrap::after { display: none; }
+
       .hero::before { width: 240px; height: 240px; right: -140px; top: 250px; }
       .quick-facts { grid-template-columns: 1fr; margin-top: 36px; }
       section { padding: 57px 0; }
@@ -185,7 +210,7 @@
       <a class="brand" href="#home" aria-label="Amir Essa home"><span class="brand-mark">AE</span><span>AMIR ESSA</span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
       <nav class="nav-links" id="nav-links" aria-label="Main navigation">
-        <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="#contact">Contact</a>
+        <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#certifications">Certifications</a><a href="#education">Education</a><a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -220,13 +245,22 @@
             <div class="actions">
               <a class="btn btn-primary" href="#contact">Get in touch <span aria-hidden="true">↗</span></a>
               <a class="btn btn-secondary" href="#experience">Explore my experience</a>
+              <a class="btn btn-secondary" href="CV-Amir-Essa.pdf" download>Download CV ↓</a>
             </div>
           </div>
-          <div class="profile-wrap">
-            <div class="profile-card">
-              <img src="amir-profile.png" alt="Portrait of Amir Elsayed Youssef Essa" onerror="this.style.display='none'; this.parentElement.style.minHeight='260px'; this.parentElement.style.display='grid'; this.parentElement.style.placeItems='center'; this.parentElement.insertAdjacentHTML('afterbegin','<div style=&quot;padding:45px 20px;text-align:center;color:#a8b7ca&quot;>Profile photo<br><strong style=&quot;color:#45d6c5;font-size:1.4rem&quot;>Amir Essa</strong><br><small>Add amir-profile.png to the repository root</small></div>')">
-              <div class="profile-caption"><strong>Operations & Data Analytics</strong><span>Jeddah, Saudi Arabia</span></div>
+          <div class="hero-visual" aria-label="Decorative animated data visualization">
+            <div class="chart-glow"></div>
+            <div class="interactive-chart" id="interactive-chart">
+              <div class="chart-label">DATA IN MOTION</div>
+              <svg viewBox="0 0 420 280" role="img" aria-label="Abstract animated chart with moving bars and trend line">
+                <g class="chart-grid"><path d="M35 55H385 M35 105H385 M35 155H385 M35 205H385 M35 245H385"/></g>
+                <g class="chart-bars"><rect x="60" y="162" width="34" height="83" rx="8"/><rect x="120" y="126" width="34" height="119" rx="8"/><rect x="180" y="94" width="34" height="151" rx="8"/><rect x="240" y="137" width="34" height="108" rx="8"/><rect x="300" y="72" width="34" height="173" rx="8"/></g>
+                <path class="chart-line" d="M45 186 C92 174 115 142 148 155 S205 104 230 119 S282 83 318 90 S350 52 376 64"/>
+                <g class="chart-points"><circle cx="45" cy="186" r="5"/><circle cx="148" cy="155" r="5"/><circle cx="230" cy="119" r="5"/><circle cx="318" cy="90" r="5"/><circle cx="376" cy="64" r="5"/></g>
+              </svg>
+              <div class="chart-footer"><span>OPERATIONS</span><span>ANALYTICS</span><span>INSIGHTS</span></div>
             </div>
+            <div class="floating-ring ring-one"></div><div class="floating-ring ring-two"></div>
           </div>
         </div>
         <div class="quick-facts" aria-label="Professional highlights">
@@ -314,6 +348,18 @@
       </div>
     </section>
 
+    <section id="certifications">
+      <div class="container">
+        <div class="section-head"><div class="section-kicker">Certification</div><h2>Learning & credentials.</h2><p class="section-intro">Professional training supporting my data analytics journey.</p></div>
+        <div class="cert-grid">
+          <article class="panel cert-card">
+            <div class="cert-mark">✦</div><div><span class="status">Completed · 40 hours</span><h3>Data Analysis Diploma — Excel & Power BI</h3><p>Pioneers Hub Academy · February 2026</p><p class="cert-small">Focus: data analysis and visualization</p>
+            <div class="cert-actions"><a class="btn btn-primary" href="Power-BI-Data-Analysis-Certificate.pdf" target="_blank" rel="noopener">Open certificate ↗</a><button class="btn btn-secondary" type="button" id="certificate-viewer-open">View full screen</button></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <div class="pdf-modal" id="certificate-modal" aria-hidden="true"><div class="pdf-modal-header"><strong>Power BI & Data Analysis Certificate</strong><a href="Power-BI-Data-Analysis-Certificate.pdf" target="_blank" rel="noopener">Open PDF ↗</a><button type="button" id="certificate-viewer-close" aria-label="Close certificate viewer">✕ Close</button></div><iframe src="Power-BI-Data-Analysis-Certificate.pdf" title="Certificate PDF full-screen viewer"></iframe></div>
     <section id="education">
       <div class="container">
         <div class="section-head"><div class="section-kicker">Education</div><h2>Academic background</h2></div>
@@ -330,7 +376,7 @@
           <div><div class="section-kicker">Contact</div><h2>Let's connect.</h2><p>For professional opportunities, collaboration, or conversations about operations, reporting, and data analysis, feel free to get in touch.</p></div>
           <div class="contact-links">
             <a href="mailto:amiressa23@gmail.com">Email me ↗</a>
-            <a href="tel:+966509085072">Call: +966 50 908 5072</a>
+            <details class="call-details"><summary>Call / WhatsApp ↗</summary><div class="call-options"><a href="tel:+966509085072">+966 50 908 5072 · Call</a><a href="https://wa.me/966509085072" target="_blank" rel="noopener noreferrer">Open WhatsApp conversation ↗</a></div></details>
             <a href="https://www.linkedin.com/in/amir-essa-87a957204/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           </div>
         </div>
@@ -340,6 +386,21 @@
 
   <footer><div class="container footer-inner"><span>© <span id="year"></span> Amir Elsayed Youssef Essa</span><span>Operations · Data Analytics · Technology</span></div></footer>
   <script>
+
+    // Subtle mouse-responsive chart tilt; disabled for touch and reduced-motion users.
+    const chart = document.getElementById('interactive-chart');
+    if (chart && window.matchMedia('(hover:hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      chart.addEventListener('mousemove', (event) => { const r=chart.getBoundingClientRect(); const x=(event.clientX-r.left)/r.width-.5; const y=(event.clientY-r.top)/r.height-.5; chart.style.transform=`rotateY(${x*9}deg) rotateX(${-y*8}deg) translateY(-3px)`; });
+      chart.addEventListener('mouseleave', () => chart.style.transform='');
+    }
+    const certModal=document.getElementById('certificate-modal');
+    const openCert=document.getElementById('certificate-viewer-open');
+    const closeCert=document.getElementById('certificate-viewer-close');
+    function showCert(){certModal.classList.add('open');certModal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');}
+    function hideCert(){certModal.classList.remove('open');certModal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');}
+    openCert?.addEventListener('click',showCert); closeCert?.addEventListener('click',hideCert);
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&certModal.classList.contains('open'))hideCert();});
+
     // Add a gentle reveal effect as sections enter the viewport.
     const revealTargets = document.querySelectorAll('.section-head, .about-grid, .job, .skill-card, .project, .education-card, .contact-panel, .quick-facts .fact, .analytics-kpi, .chart-card');
     revealTargets.forEach((element, index) => {
