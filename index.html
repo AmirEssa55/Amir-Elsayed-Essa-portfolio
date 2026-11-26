@@ -61,8 +61,8 @@
     h1 { margin: 18px 0 14px; max-width: 760px; font-size: clamp(2.55rem, 6vw, 4.65rem); line-height: 1.04; letter-spacing: -.055em; }
     h1 span { color: var(--teal); }
     .hero-role { color: #d7e5f6; font-size: clamp(1.05rem, 2vw, 1.28rem); font-weight: 650; margin: 0 0 18px; }
-    .hero-tools-line { min-height:1.55em; margin:0 0 12px; display:flex; align-items:center; gap:.45em; font-size:clamp(1.15rem,2.5vw,1.55rem); font-weight:800; letter-spacing:-.025em; color:var(--teal); }
-    .typing-word { display:inline-block; min-width:7.2ch; }
+    .hero-tools-line { height:1.8em; min-height:1.8em; margin:0 0 12px; display:flex; align-items:center; gap:.45em; font-size:clamp(1.15rem,2.5vw,1.55rem); font-weight:800; letter-spacing:-.025em; line-height:1.2; color:var(--teal); white-space:nowrap; overflow:hidden; }
+    .typing-word { display:inline-block; flex:0 0 9ch; width:9ch; min-width:9ch; height:1.2em; line-height:1.2; white-space:nowrap; overflow:hidden; }
     .typing-cursor { display:inline-block; width:2px; height:1.05em; background:currentColor; vertical-align:-.08em; animation:cursorBlink .8s steps(1) infinite; }
     @keyframes cursorBlink { 50% { opacity:0; } }
     @media(prefers-reduced-motion:reduce){.typing-cursor{animation:none}.hero-tools-line{transition:none}}
