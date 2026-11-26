@@ -44,6 +44,9 @@
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: .02em; }
     .brand-mark { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; color: #06151b; background: var(--teal); font-weight: 900; }
     .nav-links { display: flex; align-items: center; gap: 25px; }
+    .nav-tools { display:flex;align-items:center;gap:10px; }
+    .theme-toggle { width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);font-size:1.15rem;cursor:pointer;transition:transform .2s,border-color .2s; }
+    .theme-toggle:hover { transform:translateY(-2px);border-color:var(--teal); }
     .nav-links a { text-decoration: none; color: var(--muted); font-size: .91rem; transition: color .2s; }
     .nav-links a:hover, .nav-links a:focus-visible { color: var(--teal); }
     .menu-toggle { display: none; border: 1px solid var(--line); color: var(--text); background: var(--panel); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
@@ -145,11 +148,16 @@
     footer { padding: 27px 0 38px; border-top: 1px solid var(--line); color: #8192a8; font-size: .83rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
 
-    .cert-grid { display:grid; grid-template-columns:1fr; gap:16px; max-width:850px; margin:0 auto; }
-    .cert-card { padding:25px; display:flex; gap:22px; align-items:flex-start; }
-    .cert-card h3 { margin:10px 0 6px; } .cert-card p { color:var(--muted); margin:0 0 7px; }
+    .cert-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,290px));gap:18px;max-width:900px;margin:0 auto;justify-content:center; }
+    .cert-card { padding:16px;display:flex;flex-direction:column;gap:15px;align-items:stretch; }
+    .cert-preview-button { width:100%;aspect-ratio:1/1;border:1px solid var(--line);border-radius:17px;overflow:hidden;background:#fff;padding:0;cursor:pointer;position:relative;display:grid;place-items:center; }
+    .cert-preview-button img { width:100%;height:100%;object-fit:contain;display:block;background:#fff;transition:transform .35s; }
+    .cert-preview-button:hover img { transform:scale(1.035); }
+    .cert-preview-overlay { position:absolute;inset:auto 12px 12px;background:rgba(8,17,31,.83);color:#fff;padding:9px 12px;border-radius:10px;font-size:.84rem;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s; }
+    .cert-preview-button:hover .cert-preview-overlay,.cert-preview-button:focus-visible .cert-preview-overlay {opacity:1;transform:translateY(0);}
+    .cert-details h3 { margin:4px 0 6px; } .cert-details p { color:var(--muted); margin:0 0 7px; }
     .cert-small { font-size:.88rem; } .cert-mark { display:grid;place-items:center;flex:0 0 58px;height:58px;border-radius:16px;color:#101d2d;background:linear-gradient(135deg,#f1cf74,#d6a742);font-size:1.6rem; }
-    .cert-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:16px; }
+    .cert-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:12px; }
     .pdf-modal { position:fixed;inset:0;z-index:9999;background:#07111d;display:none;flex-direction:column; }
     .pdf-modal.open { display:flex; } .pdf-modal-header { display:flex;align-items:center;gap:16px;padding:12px 16px;background:#102035;color:#eaf2fb; }
     .pdf-modal-header strong { flex:1; } .pdf-modal-header a,.pdf-modal-header button { color:#dce9f8;background:transparent;border:1px solid rgba(255,255,255,.18);padding:9px 12px;border-radius:9px;text-decoration:none;cursor:pointer; }
@@ -158,7 +166,7 @@
     .call-details summary::-webkit-details-marker {display:none;} .call-options { display:flex;flex-direction:column;gap:8px;margin-top:8px; }
     .call-options a { color:#dce9f8;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.04); }
     .call-options a:hover { border-color:var(--teal);color:var(--teal); }
-    @media(max-width:640px){.cert-card{flex-direction:column}.cert-actions{flex-direction:column}.cert-actions .btn{width:100%;text-align:center}.pdf-modal-header{flex-wrap:wrap}.pdf-modal-header strong{flex-basis:100%}}
+    @media(max-width:640px){.cert-actions{flex-direction:column}.cert-actions .btn{width:100%;text-align:center}.pdf-modal-header{flex-wrap:wrap}.pdf-modal-header strong{flex-basis:100%}}
     /* Decorative chart motifs — visual accents only, with no data or labels */
     .hero-chart-motif { position:absolute; z-index:-1; pointer-events:none; opacity:.72; filter:drop-shadow(0 12px 28px rgba(0,0,0,.22)); }
     .hero-chart-bars { width:148px; height:104px; right:5.5%; top:34px; transform:rotate(7deg); }
@@ -167,6 +175,22 @@
     @media (max-width:850px) { .hero-chart-bars { right:2%; top:20px; width:112px; } .hero-chart-donut { left:-18px; bottom:75px; width:92px; } }
     @media (max-width:640px) { .hero-chart-bars { right:4%; top:18px; width:84px; opacity:.42; } .hero-chart-donut { display:none; } }
 
+    body.light-theme {
+      --bg:#f3f7fb;--bg-soft:#e8eef6;--panel:rgba(255,255,255,.88);--panel-solid:#fff;--line:rgba(51,71,96,.17);--text:#172538;--muted:#586b81;--shadow:0 18px 48px rgba(31,51,75,.12);
+      background:radial-gradient(ellipse at 12% 4%,rgba(69,214,197,.15),transparent 34rem),radial-gradient(ellipse at 92% 22%,rgba(117,169,255,.15),transparent 30rem),var(--bg);color:var(--text);
+    }
+    body.light-theme .topbar { background:rgba(243,247,251,.86); }
+    body.light-theme .hero-role,body.light-theme .about-copy,body.light-theme .contact-links a,body.light-theme .call-details summary,body.light-theme .call-options a { color:#34465c; }
+    body.light-theme .interactive-chart { background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(232,241,249,.96)); }
+    body.light-theme .fact { background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(237,244,250,.75)); }
+    body.light-theme .tag { color:#185c59;background:rgba(69,214,197,.1); }
+    body.light-theme .nav-links a { color:var(--muted); }
+    body.light-theme .nav-links a:hover,body.light-theme .nav-links a:focus-visible { color:var(--teal-dark); }
+    body.light-theme .btn-secondary { color:var(--text);background:rgba(255,255,255,.5); }
+    body.light-theme .contact-links a,body.light-theme .call-details summary,body.light-theme .call-options a { background:rgba(255,255,255,.6); }
+    body.light-theme .hero-chart-motif { opacity:.4; }
+    body.light-theme .menu-toggle { color:var(--text);background:var(--panel); }
+    body.light-theme .nav-links { background:var(--bg-soft); }
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
@@ -181,7 +205,8 @@
       .container { width: min(100% - 30px, var(--max)); }
       .nav { min-height: 64px; }
       .menu-toggle { display: inline-flex; }
-      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; padding: 15px 22px 20px; flex-direction: column; align-items: flex-start; gap: 15px; background: #0b1728; border-bottom: 1px solid var(--line); }
+      .nav-tools { gap:8px; }
+      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; padding: 15px 22px 20px; flex-direction: column; align-items: flex-start; gap: 15px; background: var(--bg-soft); border-bottom: 1px solid var(--line); }
       .nav-links.open { display: flex; }
       .hero { padding: 62px 0 50px; }
       .hero-grid { grid-template-columns: 1fr; }
@@ -208,10 +233,10 @@
   <header class="topbar">
     <div class="container nav">
       <a class="brand" href="#home" aria-label="Amir Essa home"><span class="brand-mark">AE</span><span>AMIR ESSA</span></a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
       <nav class="nav-links" id="nav-links" aria-label="Main navigation">
         <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#certifications">Certifications</a><a href="#education">Education</a><a href="#contact">Contact</a>
       </nav>
+      <div class="nav-tools"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch theme">☀️</button><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button></div>
     </div>
   </header>
 
@@ -352,8 +377,8 @@
         <div class="section-head"><div class="section-kicker">Certification</div><h2>Learning & credentials.</h2><p class="section-intro">Professional training supporting my data analytics journey.</p></div>
         <div class="cert-grid">
           <article class="panel cert-card">
-            <div class="cert-mark">✦</div><div><span class="status">Completed · 40 hours</span><h3>Data Analysis Diploma — Excel & Power BI</h3><p>Pioneers Hub Academy · February 2026</p><p class="cert-small">Focus: data analysis and visualization</p>
-            <div class="cert-actions"><a class="btn btn-primary" href="Power-BI-Data-Analysis-Certificate.pdf" target="_blank" rel="noopener">Open certificate ↗</a><button class="btn btn-secondary" type="button" id="certificate-viewer-open">View full screen</button></div></div>
+            <button class="cert-preview-button" type="button" id="certificate-viewer-open" aria-label="Open certificate full screen"><img src="certificate-preview.png" alt="Preview of Amir's Data Analysis Diploma certificate"><span class="cert-preview-overlay">Click to view full screen ↗</span></button>
+            <div class="cert-details"><span class="status">Completed · 40 hours</span><h3>Data Analysis Diploma — Excel & Power BI</h3><p>Pioneers Hub Academy · February 2026</p><p class="cert-small">Focus: data analysis and visualization</p><div class="cert-actions"><a class="btn btn-primary" href="Power-BI-Data-Analysis-Certificate.pdf" target="_blank" rel="noopener">Open certificate ↗</a></div></div>
           </article>
         </div>
       </div>
@@ -392,6 +417,11 @@
       chart.addEventListener('mousemove', (event) => { const r=chart.getBoundingClientRect(); const x=(event.clientX-r.left)/r.width-.5; const y=(event.clientY-r.top)/r.height-.5; chart.style.transform=`rotateY(${x*9}deg) rotateX(${-y*8}deg) translateY(-3px)`; });
       chart.addEventListener('mouseleave', () => chart.style.transform='');
     }
+    const themeToggle=document.getElementById('theme-toggle');
+    function setTheme(light){document.body.classList.toggle('light-theme',light);themeToggle.textContent=light?'🌙':'☀️';themeToggle.setAttribute('aria-label',light?'Switch to dark mode':'Switch to light mode');themeToggle.title=light?'Switch to dark mode':'Switch to light mode';try{localStorage.setItem('portfolio-theme',light?'light':'dark')}catch(e){}}
+    let savedTheme='dark';try{savedTheme=localStorage.getItem('portfolio-theme')||'dark'}catch(e){}
+    setTheme(savedTheme==='light');themeToggle.addEventListener('click',()=>setTheme(!document.body.classList.contains('light-theme')));
+
     const certModal=document.getElementById('certificate-modal');
     const openCert=document.getElementById('certificate-viewer-open');
     const closeCert=document.getElementById('certificate-viewer-close');
