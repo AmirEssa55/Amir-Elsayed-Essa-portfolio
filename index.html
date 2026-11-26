@@ -61,6 +61,11 @@
     h1 { margin: 18px 0 14px; max-width: 760px; font-size: clamp(2.55rem, 6vw, 4.65rem); line-height: 1.04; letter-spacing: -.055em; }
     h1 span { color: var(--teal); }
     .hero-role { color: #d7e5f6; font-size: clamp(1.05rem, 2vw, 1.28rem); font-weight: 650; margin: 0 0 18px; }
+    .hero-tools-line { min-height:1.55em; margin:0 0 12px; display:flex; align-items:center; gap:.45em; font-size:clamp(1.15rem,2.5vw,1.55rem); font-weight:800; letter-spacing:-.025em; color:var(--teal); }
+    .typing-word { display:inline-block; min-width:7.2ch; }
+    .typing-cursor { display:inline-block; width:2px; height:1.05em; background:currentColor; vertical-align:-.08em; animation:cursorBlink .8s steps(1) infinite; }
+    @keyframes cursorBlink { 50% { opacity:0; } }
+    @media(prefers-reduced-motion:reduce){.typing-cursor{animation:none}.hero-tools-line{transition:none}}
     .hero-copy { color: var(--muted); max-width: 690px; font-size: 1.04rem; margin: 0; }
     .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 47px; padding: 0 19px; border-radius: 12px; text-decoration: none; font-weight: 750; font-size: .93rem; transition: transform .2s, background .2s, border-color .2s; }
@@ -303,6 +308,7 @@
           <div>
             <div class="eyebrow">Operations · Data · Technology</div>
             <h1>AMIR ELSAYED<br><span>YOUSSEF ESSA</span></h1>
+            <p class="hero-tools-line" aria-label="Excel, Power BI, SQL"><span id="typing-word" class="typing-word" aria-live="polite">Excel</span><span class="typing-cursor" aria-hidden="true"></span></p>
             <p class="hero-role">Operations Supervisor | Data Analyst | IT Specialist</p>
             <p class="hero-copy">I combine hands-on operations experience with data analysis and technical support to help teams understand performance, improve workflows, and make better-informed decisions.</p>
             <div class="actions">
@@ -437,7 +443,7 @@
         <div class="panel contact-panel">
           <div><div class="section-kicker">Contact</div><h2>Let's connect.</h2><p>For professional opportunities, collaboration, or conversations about operations, reporting, and data analysis, feel free to get in touch.</p></div>
           <div class="contact-links">
-            <a href="mailto:amiressa23@gmail.com">Email me ↗</a>
+            <a href="mailto:amiressa23@gmail.com">Email me on <strong>amiressa23@gmail.com</strong> ↗</a>
             <details class="call-details"><summary>Call / WhatsApp ↗</summary><div class="call-options"><a href="tel:+966509085072">+966 50 908 5072 · Call</a><a href="https://wa.me/966509085072" target="_blank" rel="noopener noreferrer">Open WhatsApp conversation ↗</a></div></details>
             <a href="https://www.linkedin.com/in/amir-essa-87a957204/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           </div>
@@ -456,6 +462,15 @@
       chart.addEventListener('mousemove', (event) => { const r=chart.getBoundingClientRect(); const x=(event.clientX-r.left)/r.width-.5; const y=(event.clientY-r.top)/r.height-.5; chart.style.transform=`rotateY(${x*9}deg) rotateX(${-y*8}deg) translateY(-3px)`; });
       chart.addEventListener('mouseleave', () => chart.style.transform='');
     }
+    // Subtle rotating skill words under the name. Disable typing animation for reduced-motion users.
+    const typingWord=document.getElementById('typing-word');
+    const skillsToRotate=['Excel','Power BI','SQL'];
+    if(typingWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      let skillIndex=0;
+      const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+      (async()=>{while(true){await pause(1700);const current=typingWord.textContent;for(let i=current.length;i>=0;i--){typingWord.textContent=current.slice(0,i);await pause(48);}skillIndex=(skillIndex+1)%skillsToRotate.length;const next=skillsToRotate[skillIndex];for(let i=1;i<=next.length;i++){typingWord.textContent=next.slice(0,i);await pause(78);}await pause(450);}})();
+    }
+
     const themeToggle=document.getElementById('theme-toggle');
     function setTheme(light){document.body.classList.toggle('light-theme',light);themeToggle.textContent=light?'🌙':'☀️';themeToggle.setAttribute('aria-label',light?'Switch to dark mode':'Switch to light mode');themeToggle.title=light?'Switch to dark mode':'Switch to light mode';try{localStorage.setItem('portfolio-theme',light?'light':'dark')}catch(e){}}
     let savedTheme='dark';try{savedTheme=localStorage.getItem('portfolio-theme')||'dark'}catch(e){}
